@@ -1,6 +1,19 @@
+const lodeProduct = () => {
+    const cart = getCard()
+    for (const product in cart) {
+        displayProduct(product)
+    }
+
+}
+
+
+
 const addItem = () => {
     const nameField = document.getElementById('productName');
     const name = nameField.value;
+    if (!name) {
+        return;
+    }
     //  display in the Ui 
     displayProduct(name)
 
@@ -27,6 +40,7 @@ const getCard = () => {
     if (cart) {
         cartObj = JSON.parse(cart)
 
+
     }
     else {
         cartObj = {}
@@ -36,9 +50,23 @@ const getCard = () => {
 const addproductToCart = name => {
     console.log(name)
     const cart = getCard();
-    cart[name] = 1;
+    if (cart[name]) {
+        cart[name] = cart[name] + 1;;
+    }
+    else {
+        cart[name] = 1;
+    }
     console.log(cart)
     const putcart = JSON.stringify(cart);
     localStorage.setItem('cart', putcart)
 
 }
+
+const placeOrder = () => {
+    document.getElementById('ul').textContent = '';
+    localStorage.removeItem('cart')
+}
+
+
+
+lodeProduct();
